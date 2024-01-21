@@ -96,9 +96,6 @@ static void thermalMgr(void *pvParameters)
             {
               safeOperatingConditions();
             }
-            while (1){
-              continue;
-            }
           }
         }
     }

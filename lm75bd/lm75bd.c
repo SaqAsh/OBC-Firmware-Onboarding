@@ -37,11 +37,16 @@ error_code_t readTempLM75BD(uint8_t devAddr, float *temp) {
   errCode = i2cSendTo(devAddr, &buff, 1); // this sets the temp register, there is only one byte being passed in to set the pointer register
   if (errCode != ERR_CODE_SUCCESS) return errCode;
 
-  uint8_t tempData[2] = {0};
-  errCode = i2cReceiveFrom(devAddr, tempData, 2); // the size is set to two as the temperature device sends two bytes of data
-  if (errCode != ERR_CODE_SUCCESS) return errCode;  
-  int16_t regVal = tempData[0]<<8 | tempData[1];
-  *temp = (float)(regVal>>5)*0.125;
+  while ( true)
+  {
+    uint8_t tempData[2] = {0};
+    errCode = i2cReceiveFrom(devAddr, tempData, 2); // the size is set to two as the temperature device sends two bytes of data
+    if (errCode != ERR_CODE_SUCCESS) return errCode;  
+    int16_t regVal = tempData[0]<<8 | tempData[1];
+    *temp = (float)(regVal>>5)*0.125;
+
+  }
+
   //go through the data sheet and test out if your calculations actually work
   return ERR_CODE_SUCCESS;
 }
