@@ -38,7 +38,7 @@ error_code_t readTempLM75BD(uint8_t devAddr, float *temp) {
   if (errCode != ERR_CODE_SUCCESS) return errCode;
 
     uint8_t tempData[2] = {0};
-    errCode = i2cReceiveFrom(devAddr, tempData, 2); // the size is set to two as the temperature device sends two bytes of data
+    errCode = i2cReceiveFrom(devAddr, temp, 2); // the size is set to two as the temperature device sends two bytes of data
     if (errCode != ERR_CODE_SUCCESS) return errCode;  
     int16_t regVal = tempData[0]<<8 | tempData[1];
     *temp = (float)(regVal>>5)*0.125;
