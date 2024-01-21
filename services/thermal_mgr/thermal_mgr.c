@@ -85,6 +85,9 @@ static void thermalMgr(void *pvParameters)
         {
           float temp = 0.0f;
           error_code_t errCode = readTempLM75BD(LM75BD_OBC_I2C_ADDR, &temp);
+          while (1){
+
+          
           if (errCode == ERR_CODE_SUCCESS)
           {
             // excecuting checks for over_temp conditions and safe operations
@@ -97,6 +100,7 @@ static void thermalMgr(void *pvParameters)
               safeOperatingConditions();
             }
           }
+        }
         }
     }
   }
